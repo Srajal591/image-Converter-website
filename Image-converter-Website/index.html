@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ImageMorph - Convert Images to Any Format</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- GSAP CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body class="light-mode">
+  <div class="background-animation">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <header>
+    <div class="container header-container">
+      <div class="logo">
+        <span>ImageMorph</span>
+      </div>
+      <nav>
+        <a href="#" class="active">Home</a>
+        <a href="#features">Features</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <div class="theme-toggle">
+        <input type="checkbox" id="theme-toggle-checkbox">
+        <label for="theme-toggle-checkbox" class="toggle-label">
+          <div class="toggle-ball"></div>
+          <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </label>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <h1>Transform Your Images <br>
+            <span class="gradient-text">With Just a Few Clicks</span>
+          </h1>
+          <p>Convert your images to PNG, JPG, GIF, WebP and more. Fast, secure, and completely free.</p>
+        </div>
+
+        <div class="converter-card">
+          <div class="upload-area" id="upload-area">
+            <div class="upload-content">
+              <div class="upload-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+              </div>
+              <h3>Drag & drop your image here</h3>
+              <p>Supports PNG, JPG, GIF, WebP and more</p>
+              <button class="btn btn-outline" id="browse-btn">Browse files</button>
+              <input type="file" id="file-input" accept="image/*" hidden>
+            </div>
+          </div>
+
+          <div class="converter-interface" id="converter-interface" style="display: none;">
+            <div class="converter-header">
+              <h3>Convert your image</h3>
+              <button class="btn-reset" id="reset-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                Reset
+              </button>
+            </div>
+
+            <div class="tabs">
+              <div class="tab-header">
+                <button class="tab-btn active" data-tab="preview">Preview</button>
+                <button class="tab-btn" data-tab="settings">Settings</button>
+              </div>
+              <div class="tab-content">
+                <div class="tab-pane active" id="preview-tab">
+                  <div class="image-preview">
+                    <img id="preview-image" src="/placeholder.svg" alt="Preview">
+                    <div class="format-badge" id="format-badge" style="display: none;"></div>
+                  </div>
+                  <div class="image-info" id="image-info"></div>
+                </div>
+                <div class="tab-pane" id="settings-tab">
+                  <div class="format-selection">
+                    <label>Output Format</label>
+                    <div class="format-grid">
+                      <div class="format-option">
+                        <input type="radio" name="format" id="png" value="png" checked>
+                        <label for="png">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                          PNG
+                        </label>
+                      </div>
+                      <div class="format-option">
+                        <input type="radio" name="format" id="jpeg" value="jpeg">
+                        <label for="jpeg">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                          JPG
+                        </label>
+                      </div>
+                      <div class="format-option">
+                        <input type="radio" name="format" id="webp" value="webp">
+                        <label for="webp">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                          WebP
+                        </label>
+                      </div>
+                      <div class="format-option">
+                        <input type="radio" name="format" id="gif" value="gif">
+                        <label for="gif">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                          GIF
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="action-buttons">
+              <button class="btn btn-primary" id="convert-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38"></path></svg>
+                <span>Convert</span>
+              </button>
+              <button class="btn btn-primary" id="download-btn" style="display: none;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <span>Download</span>
+              </button>
+              <button class="btn btn-outline" id="convert-again-btn" style="display: none;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38"></path></svg>
+                <span>Convert Again</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="features">
+      <div class="container">
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"></path><path d="M3 15v4h16a2 2 0 0 0 0-4H3z"></path></svg>
+            </div>
+            <h3>Multiple Formats</h3>
+            <p>Convert to PNG, JPG, GIF, WebP and more with a single click.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path></svg>
+            </div>
+            <h3>Secure Conversion</h3>
+            <p>All processing happens in your browser. Your images never leave your device.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><path d="M13 2v7h7"></path></svg>
+            </div>
+            <h3>Batch Processing</h3>
+            <p>Convert multiple images at once to save time.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" class="faq">
+      <div class="container">
+        <div class="section-header">
+          <h2>Frequently Asked Questions</h2>
+          <p>Everything you need to know about our image conversion service.</p>
+        </div>
+        <div class="faq-grid">
+          <div class="faq-item">
+            <h3>Is this service free?</h3>
+            <p>Yes, our image conversion service is completely free to use with no hidden fees.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Are my images secure?</h3>
+            <p>All image processing happens directly in your browser. Your images never leave your device.</p>
+          </div>
+          <div class="faq-item">
+            <h3>What formats are supported?</h3>
+            <p>We support conversion to PNG, JPG, GIF, WebP, and more popular image formats.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Is there a file size limit?</h3>
+            <p>The file size limit depends on your browser's capabilities, but generally we support files up to 50MB.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; <span id="current-year"></span> ImageMorph. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="#">Terms</a>
+        <a href="#">Privacy</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast">
+    <div class="toast-content">
+      <div class="toast-title" id="toast-title"></div>
+      <div class="toast-message" id="toast-message"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
